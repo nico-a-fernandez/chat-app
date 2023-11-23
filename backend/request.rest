@@ -1,5 +1,4 @@
-POST http://localhost:3001/login Content-Type: application/json 
+POST http://localhost:3001/authenticate
+Content-Type: application/json 
 
-{
-  "username": "adam", "secret":"pass1234"
-}
+{"username": "adam"}
