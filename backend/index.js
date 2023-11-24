@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 require("dotenv").config();
 
 const MyPrivateKey = process.env.PRIVATE_KEY;
@@ -18,12 +19,12 @@ app.post("/authenticate", async (req, res) => {
 				secret: username,
 				first_name: username,
 			},
-			{ headers: { "private-key": { MyPrivateKey } } }
+			{ headers: { "private-key": MyPrivateKey } }
 		);
 		return res.status(r.status).json(r.data);
-	} catch (error) {}
-
-	return res.json({ username: username, secret: "sha256..." });
+	} catch (e) {
+		return res.status(e.response.status).json(e.response.data);
+	}
 });
 
 app.listen(3001);
