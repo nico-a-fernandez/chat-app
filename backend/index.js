@@ -5,13 +5,19 @@ require("dotenv").config();
 
 const MyPrivateKey = process.env.PRIVATE_KEY;
 const app = express();
-app.use(express.json());
-app.use(cors({ origin: true }));
+
+// Use a single cors middleware with multiple origin configurations
 app.use(
 	cors({
-		origin: "https://chat-app-sigma-puce.vercel.app/",
+		origin: [
+			"http://localhost:3000",
+			"https://chat-app-sigma-puce.vercel.app/",
+		],
+		credentials: true,
 	})
 );
+
+app.use(express.json());
 
 app.post("/authenticate", async (req, res) => {
 	const { username } = req.body;
@@ -32,4 +38,7 @@ app.post("/authenticate", async (req, res) => {
 	}
 });
 
-app.listen(3001);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
+});
