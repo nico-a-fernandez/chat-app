@@ -7,6 +7,11 @@ const MyPrivateKey = process.env.PRIVATE_KEY;
 const app = express();
 app.use(express.json());
 app.use(cors({ origin: true }));
+app.use(
+	cors({
+		origin: "https://chat-app-sigma-puce.vercel.app/",
+	})
+);
 
 app.post("/authenticate", async (req, res) => {
 	const { username } = req.body;
